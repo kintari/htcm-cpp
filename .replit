@@ -1,7 +1,7 @@
 compile = "clear; make"
-run = "./build/bin/debug/htcm-cpp data/20230605-195519"
+run = "./build/bin/debug/htcm-cpp data/20230605-195519.zevtc"
 entrypoint = "src/main.cpp"
-hidden = [".ccls-cache"]
+hidden = [".ccls-cache", ".gitignore", ".vscode"]
 
 [nix]
 channel = "stable-22_11"

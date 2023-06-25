@@ -19,7 +19,9 @@
 #include "Event.h"
 #include "Loader.h"
 #include "Skill.h"
-#include "json.h"
+
+#include "MemoryStream.h"
+#include "zip.h"
 
 #include <nlohmann/json.hpp>
 
@@ -33,12 +35,13 @@ using json = nlohmann::json;
 // food / util
 // achievement eligibility
 
-typedef std::pair<std::string, std::string> string_pair;
 
 template <typename... Ts>
 void print(Ts... ts)
 {
-	(std::cout << ... << ts);
+	std::stringstream ss;
+	(ss << ... << ts);
+	std::cout << ss.str();
 }
 
 template <typename... Ts>
@@ -50,182 +53,171 @@ void println(Ts... ts)
 class Main
 {
 public:
+
 	Main(const std::vector<std::string> &&args) : Args(std::move(args)) {}
 
 	int Run();
 
 protected:
-	struct StrikeDamage
-	{
-		uint64_t Time;
-		Agent &Attacker, &Target;
-		Skill &Skill;
-		int Amount;
+
+	struct StrikeDamage {
+		uint64_t time;
+		Agent &attacker, &target;
+		Skill &skill;
+		int amount;
 	};
 
-	struct BuffRemove
-	{
-		uint64_t Time;
-		Agent &Instigator, &Target;
-		Skill &Buff;
-	};
-
-	struct EventData
-	{
-		Encounter *Encounter;
-		uint64_t Time;
-		Event *Event;
-		Agent *Agent;
-		Skill *Skill;
+	struct BuffRemove {
+		uint64_t time;
+		Agent &instigator, &target;
+		Skill &buff;
 	};
 
 	void OnStrikeDamage(const StrikeDamage &);
 	void OnBuffRemove(const BuffRemove &);
 
-	void OnReveal(const EventData &);
-	void OnDown(const EventData &);
-	void OnUp(const EventData &);
-	void OnDead(const EventData &);
-	void OnHitOrb(const EventData &);
-	void OnMissGreen(const EventData &);
-	void OnBreakbarState(const EventData &);
-	void OnBreakbarDamage(const EventData &);
-
 private:
 	const std::vector<std::string> Args;
 };
 
-std::string quote(const std::string &s) { return "\"" + s + "\""; }
-
-template <typename K, typename V>
-V get_or(const std::map<K, V> &m, const K &key, const V &value)
-{
-	auto iter = m.find(key);
-	return iter == m.end() ? value : iter->second;
+void Main::OnBuffRemove(const BuffRemove& event) {
+	//assert(skill); // 'skill' is the buff that was removed
+	auto message = json {
+		{ "time", event.time },
+		{ "agent", {
+			{ "id", event.target.addr },
+			{ "name", event.target.name }
+		}},
+		{ "buff", {
+			{ "id", event.buff.id },
+			{ "name", event.buff.name },
+			{ "remove", 1 }
+		}}
+	};
+	std::cout << message << std::endl;
 }
 
-int Main::Run()
-{
-	if (Args.size() > 0)
-	{
-		for (auto &arg : Args)
-		{
-			BinaryReader reader(arg);
-			Loader loader(reader);
-			Encounter *encounter = loader.LoadEncounter();
-			std::map<int, std::string> professions;
-			professions[3] = "Engineer";
-			professions[7] = "Mesmer";
-			std::map<int, std::string> specializations;
-			specializations[66] = "Virtuoso";
 
-			/*
-						for (size_t i = 0; i < encounter->Agents.size(); i++) {
-							std::vector<string_pair> row;
-							auto &agent = encounter->Agents[i];
-							if (agent->IsPlayer()) {
-								int prof = static_cast<int>(agent->prof);
-								int elite = static_cast<int>(agent->elite);
-							} else if (agent->IsNPC()) {
-								row.emplace_back("type", "npc");
-								row.emplace_back("species",
-				 std::to_string(agent->GetSpecies())); } else { row.emplace_back("type",
-				 "gadget");
-							}
-							to_json(std::cout, row);
-																			std::cout << std::endl;
-						}
-			*/
 
-			for (auto skill : encounter->Skills)
-			{
-				// std::cout << skill->id << std::endl;
-				// std::cout << std::string(&skill->name[0]) << std::endl;
+
+int Main::Run() {
+/*
+	if (Args.size() > 0) {
+			if (false) {
+
+				// zip file
+				printf("is a zip file\n");
+
+				// locate the 'end of central directory' record
+				size_t offset = st.st_size - 4;
+				while (offset > 0) {
+					uint32_t value = *(const uint32_t *) &data[offset];
+					if (value == 0x06054b50) {
+						printf("found eocd magic at %zu bytes (eof-%zu)\n", offset, st.st_size - offset);
+						zip_eocd_t *eocd = (zip_eocd_t *) &data[offset];
+						printf("num_cdir_recs=%d\n", eocd->num_cdir_recs);
+						printf("cdir_size=%d\n", eocd->cdir_size);
+						printf("cdir_start=%d\n", eocd->cdir_start);
+
+
 			}
-
-			auto time_base = encounter->Events[0]->time;
-			for (size_t i = 0; i < encounter->Events.size(); i++)
-			{
-				Event *event = encounter->Events[i];
-				uint64_t time = event->time - time_base;
-				Agent *src_agent = encounter->GetAgentByAddr(event->src_agent);
-				Agent *dst_agent = encounter->GetAgentByAddr(event->dst_agent);
-				Skill *skill = encounter->GetSkill(event->skillid);
-				if (event->is_statechange)
+			else if (magic == ) {
+				printf("is an evtc file\n");
+			}
+			else {
+				printf("unknown file type\n");
+			}
+			
+			//BinaryReader reader(arg);
+			//reader.read(&magic);
+			uint32_t magic = 0;
+			if (magic == 0x04034b50) {
+				// zip file
+				printf("is a zip file\n");
+				std::array<uint8_t,512> buf;
+				
+				//fread()
+			}
+			else if (magic == 0x43545645) {
+				printf("is an evtc file\n");
+				//Loader loader(reader);
+				//Encounter *encounter = loader.LoadEncounter();
+				Encounter *encounter = nullptr;
+				for (auto skill : encounter->Skills)
 				{
-					switch (event->is_statechange)
+					// std::cout << skill->id << std::endl;
+					// std::cout << std::string(&skill->name[0]) << std::endl;
+				}
+				auto time_base = encounter->Events[0]->time;
+				for (size_t i = 0; i < encounter->Events.size(); i++)
+				{
+					Event *event = encounter->Events[i];
+					uint64_t time = event->time - time_base;
+					Agent *src_agent = encounter->GetAgentByAddr(event->src_agent);
+					Agent *dst_agent = encounter->GetAgentByAddr(event->dst_agent);
+					Skill *skill = encounter->GetSkill(event->skillid);
+					if (event->is_statechange)
 					{
-					case CBTS_CHANGEDEAD:
-						OnDead(EventData{encounter, time, event, src_agent});
-						break;
-					case CBTS_CHANGEDOWN:
-						OnDown(EventData{encounter, time, event, src_agent});
-						break;
-					case CBTS_CHANGEUP:
-						OnUp(EventData{encounter, time, event, src_agent});
-						break;
+							switch (event->is_statechange)
+						{
+						case CBTS_CHANGEDEAD:
+							OnDead(EventData{encounter, time, event, src_agent});
+							break;
+						case CBTS_CHANGEDOWN:
+							OnDown(EventData{encounter, time, event, src_agent});
+							break;
+						case CBTS_CHANGEUP:
+							OnUp(EventData{encounter, time, event, src_agent});
+							break;
+						}
 					}
-				}
-				else if (event->is_activation)
-				{
-				}
-				else if (event->is_buffremove)
-				{
-					if (src_agent) {
-						assert(skill); // 'skill' is the buff that was removed
+					else if (event->is_activation)
+					{
+					}
+					else if (event->is_buffremove)
+					{
+						
+					}
+					else if (event->buff != 0)
+					{
+					}
+					else
+					{
+						auto agent = json {
+							{ "id", event->src_agent },
+							{ "name", src_agent ? src_agent->name : std::to_string(event->src_agent) }
+						};
+						auto target = json {
+							{ "id", dst_agent->addr },
+							{ "name", dst_agent->name }
+						};
 						auto message = json {
 							{ "time", time },
-							{ "agent", {
-								{ "id", src_agent->addr },
-								{ "name", src_agent->name }
-							}},
-							{ "buff", {
-								{ "id", skill->id },
-								{ "name", skill->name },
-								{ "remove", 1 }
+							{ "agent", agent },
+							{ "strike", {
+								{ "target", target },
+								{ "amount", event->value },
+								{ "skill", skill->name }
 							}}
 						};
 						std::cout << message << std::endl;
+						message = json {
+							{ "time", time },
+							{ "agent", target },
+							{ "struck", {
+								{ "attacker", agent },
+								{ "amount", event->value },
+								{ "skill", skill->name }
+							}}
+						};
+						std::cout << message << std::endl;
+						//OnStrikeDamage(StrikeDamage{time, *src_agent, *dst_agent, *skill, event->value});
 					}
 				}
-				else if (event->buff != 0)
-				{
-				}
-				else
-				{
-					auto agent = json {
-						{ "id", event->src_agent },
-						{ "name", src_agent ? src_agent->name : std::to_string(event->src_agent) }
-					};
-					auto target = json {
-						{ "id", dst_agent->addr },
-						{ "name", dst_agent->name }
-					};
-					auto message = json {
-						{ "time", time },
-						{ "agent", agent },
-						{ "strike", {
-							{ "target", target },
-							{ "amount", event->value },
-							{ "skill", skill->name }
-						}}
-					};
-					std::cout << message << std::endl;
-					message = json {
-						{ "time", time },
-						{ "agent", target },
-						{ "struck", {
-							{ "attacker", agent },
-							{ "amount", event->value },
-							{ "skill", skill->name }
-						}}
-					};
-					std::cout << message << std::endl;
-					//OnStrikeDamage(StrikeDamage{time, *src_agent, *dst_agent, *skill, event->value});
-				}
-			}
+			}		
 		}
 	}
+	*/
 	return 0;
 }
 
@@ -234,19 +226,19 @@ void Main::OnStrikeDamage(const StrikeDamage &strike)
 	// std::string skill_name = skill == nullptr ? "unknown_skill" : &skill->name[0];
 	// std::string attacker_name = attacker ? attacker->name : "???";
 	// std::string target_name = target ? target->name : "???";
-	if (strike.Attacker.IsPlayer())
+	if (strike.attacker.IsPlayer())
 	{
 		auto message = json{
 			{ "player", {
-				{ "name", strike.Attacker.name }
+				{ "name", strike.attacker.name }
 			}},
 			{ "event", {
 				{ "type", "strike" },
-				{ "time", strike.Time },
-				{ "target", strike.Target.name },
+				{ "time", strike.time },
+				{ "target", strike.target.name },
 				{"skill", {
-						{ "name", strike.Skill.name },
-						{ "amount", strike.Amount }
+						{ "name", strike.skill.name },
+						{ "amount", strike.amount }
 				}}
 			}}
 		};
@@ -254,77 +246,78 @@ void Main::OnStrikeDamage(const StrikeDamage &strike)
 	}
 	else
 	{
-		/*
-		print(
-			"{",
-				"\"player\": { \"name\": \"", attacker_name, "\",",
-				"\"event\": {",
-					"\"time\": ", time, ", ",
-					"\"type\": \"strike\",",
-					"\"target\": \"", target_name, "\",",
-					"\"skill\": \"", skill_name, "\",",
-					"\"damage\": ", value, "\"",
-				"}",
-			"}\n"
-		);
-		*/
 	}
 }
 
-void Main::OnBuffRemove(const BuffRemove &data)
-{
-	if (data.Instigator.IsPlayer()) {
-		auto message = json {
-		};
-		std::cout << message << std::endl;
+#define EVTC_FILE_MAGIC 0x43545645
+
+bool scan_for_magic(size_t *resultp, uint32_t magic, const void *buf, size_t length) {
+	const uint8_t *bytes = (const uint8_t *) buf;
+	for (size_t offset = 0; offset + 4 < length; offset++) {
+		uint32_t value = *(uint32_t *) &bytes[offset];
+		if (value == magic) {
+			*resultp = offset;
+			return true;
+		}
 	}
-	/*
-	print(
-			"{",
-			"\"event\": { \"time\": ", data.Time, "}",
-			"\"type\": \"buff_remove\","
-			"\"buff\": {"
-			"\"id\": ",
-			data.Buff.id, ","
-										"\"name\": \"",
-			data.Buff.name, "\"",
-			"}",
-			"}",
-			"}\n");
-			*/
+	return false;
 }
 
-void Main::OnDown(const EventData &data)
-{
-	//print("{ \"player\": { \"name\": \"", data.Agent->name, "\" }, \"event\": { \"time\": ", data.Time, ", \"type\": \"down\" } }\n");
+void analyze_file(const char *filename) {
+	FILE *f = fopen(filename, "rb");
+	if (f) {
+		struct stat st = { 0 };
+		int res = fstat(fileno(f), &st);
+		assert(res == 0);
+		printf("st.st_size=%zu\n", st.st_size);
+		if (st.st_size > 0) {
+			uint8_t *buf = (uint8_t *) malloc(st.st_size);
+			assert(buf);
+			if (buf) {
+				size_t num_read = fread(buf, 1, st.st_size, f);
+				assert(num_read == st.st_size);
+				if (num_read == st.st_size) {
+					uint32_t magic = *(uint32_t *) buf;
+					printf("magic=0x%08x\n", magic);
+					if (magic == ZIP_FILE_MAGIC) {
+
+						size_t eocd_offset;
+						if (scan_for_magic(&eocd_offset, ZIP_EOCD_MAGIC, buf, num_read)) {
+
+							/* keep scanning to find the last occurence */
+							while (eocd_offset + 4 < num_read)
+								if (!scan_for_magic(&eocd_offset, ZIP_EOCD_MAGIC, &buf[eocd_offset+4], num_read-eocd_offset-4))
+									break;
+							
+							zip_eocd_t *eocd = (zip_eocd_t *) &buf[eocd_offset];
+							zip_cd_file_t *cdir = (zip_cd_file_t *) &buf[eocd->cdir_start];
+							
+							for (size_t i = 0; i < eocd->num_cdir_recs; i++) {
+								zip_cd_file_t *hdr = &cdir[i];
+
+								char *filename = (char *) &hdr[1];
+								char *extra = filename + hdr->filename_len;
+								char *comment = extra + hdr->extra_field_len;
+	
+								printf("files[%zu]:\n", i);
+								printf("  compressed_size: %d\n", hdr->compressed_size);
+								printf("  uncompressed_size: %d\n", hdr->uncompressed_size);
+								printf("  compression_method: %d\n", hdr->compression_method);
+								printf("  local_file_header: %d\n", hdr->local_file_header);
+								printf("  filename: '%.*s'\n", hdr->filename_len, (const char *) &hdr[1]);
+								printf("  extra: '%.*s'\n", hdr->extra_field_len, extra);
+								printf("  comment: '%.*s'\n", hdr->file_comment_len, comment);
+							}
+						}
+					}
+				}
+			}
+		}
+		fclose(f);
+	}
 }
 
-void Main::OnUp(const EventData &data)
-{
-	//print("{ \"player\": { \"name\": \"", data.Agent->name, "\" }, \"event\": { \"time\": ", data.Time, ", \"type\": \"up\" } }\n");
-}
-
-void Main::OnDead(const EventData &data)
-{
-	//print("{ \"player\": { \"name\": \"", data.Agent->name, "\" }, \"event\": { \"time\": ", data.Time, ", \"type\": \"dead\" } }\n");
-}
-
-int main(int argc, const char *argv[])
-{
-
-	std::vector<std::string> args;
+int main(int argc, const char *argv[]) {
 	for (int i = 1; i < argc; i++)
-		args.push_back(argv[i]);
-
-	try
-	{
-		Main app(std::move(args));
-		app.Run();
-		return 0;
-	}
-	catch (std::exception &e)
-	{
-		std::cerr << "error: " << e.what() << std::endl;
-		return -1;
-	}
+		analyze_file(argv[i]);
 }

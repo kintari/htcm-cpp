@@ -21,8 +21,8 @@ Encounter *Loader::LoadEncounter() {
 	uint16_t bossId = 0;
 	uint8_t unused = 0;
 
-	Reader
-		.read_into(magic)
+	(*Reader)
+		//.read_into(magic)
 		.read_into(version)
 		.read(&revision)
 		.read(&bossId)
@@ -30,18 +30,18 @@ Encounter *Loader::LoadEncounter() {
 
 	uint32_t numAgents = 0;
 	std::vector<Agent *> agents;
-	Reader.read(&numAgents);
+	(*Reader).read(&numAgents);
 	for (auto i = 0; i < numAgents; i++)
 		agents.push_back(LoadAgent());
 
 	uint32_t numSkills = 0;
 	std::vector<Skill *> skills;
-	Reader.read(&numSkills);
+	(*Reader).read(&numSkills);
 	for (auto i = 0; i < numSkills; i++)
 		skills.push_back(LoadSkill());
 
 	std::vector<Event *> events;
-	while (!Reader.eof())
+	while (!Reader->eof())
 		events.push_back(LoadEvent());
 
 	return new Encounter(std::move(agents), std::move(skills), std::move(events));
@@ -50,7 +50,7 @@ Encounter *Loader::LoadEncounter() {
 Agent *Loader::LoadAgent() {
 	Agent *agent = new Agent();
 	std::array<char,64> buf {};
-	Reader
+	(*Reader)
 		.read(&agent->addr)
 		.read(&agent->prof)
 		.read(&agent->elite)
@@ -79,7 +79,7 @@ Agent *Loader::LoadAgent() {
 Skill *Loader::LoadSkill() {
 	Skill *skill = new Skill();
 	std::array<char,64> name;
-	Reader
+	(*Reader)
 		.read(&skill->id)
 		.read_into(name);
 	skill->name = std::string(&name[0]);
@@ -88,7 +88,7 @@ Skill *Loader::LoadSkill() {
 
 Event *Loader::LoadEvent() {
 	Event *event = new Event();
-	Reader
+	(*Reader)
 		.read(&event->time)
 		.read(&event->src_agent)
 		.read(&event->dst_agent)

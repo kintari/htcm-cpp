@@ -1,6 +1,7 @@
 { pkgs }: {
 	deps = [
-		pkgs.jq.bin
+		pkgs.cmake
+  pkgs.jq.bin
   pkgs.unzip
   pkgs.clang_12
 		pkgs.ccls

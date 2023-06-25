@@ -1,6 +1,8 @@
 #pragma once
 
-class BinaryReader;
+#include <memory>
+
+#include "BinaryReader.h"
 
 class Encounter;
 class Agent;
@@ -9,11 +11,14 @@ class Event;
 
 class Loader {
 public:
-	Loader(BinaryReader& r) : Reader(r) {}
+	Loader(std::shared_ptr<BinaryReader> r)
+		: Reader(r)
+	{
+	}
 	Encounter *LoadEncounter();
 	Agent *LoadAgent();
 	Skill *LoadSkill();
 	Event *LoadEvent();
 private:
-	BinaryReader& Reader;
+	std::shared_ptr<BinaryReader> Reader;
 };

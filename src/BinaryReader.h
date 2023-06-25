@@ -1,24 +1,28 @@
 #pragma once
 
-#include <string>
-#include <concepts>
-
-#include <stdio.h>
 #include <array>
+#include <concepts>
+#include <string>
+
+#include "Stream.h"
 
 class BinaryReader {
 public:
 
-	BinaryReader(const std::string& filename);
-	~BinaryReader();
-	
+	BinaryReader(Stream *stream)
+		: _stream(stream)
+	{
+	}
+
+	~BinaryReader() {};
+
 	template <std::integral T>
 	BinaryReader& read(T *value) {
 		return read(value, sizeof(T));
 	}
 
 	BinaryReader& read(void *buf, size_t count) {
-		(void) fread(buf, 1, count, _file);
+		_stream->read(buf, count);
 		return *this;
 	}
 
@@ -30,11 +34,10 @@ public:
 		return read(&a[0], N*sizeof(T));
 	}
 
-bool eof() const {
-		return feof(_file);
+	bool eof() const {
+		return _stream->done();
 	}
 
 private:
-
-	FILE *_file;
+	Stream *_stream;
 };

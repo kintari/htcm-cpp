@@ -1,6 +1,6 @@
 
 CXX=clang++
-CXXFLAGS=-std=c++20 -g -O0 -MMD -U_FORTIFY_SOURCE -Werror=return-type
+CXXFLAGS=-std=c++20 -g -O0 -MMD -U_FORTIFY_SOURCE -Iinclude -Werror=return-type
 
 BUILD_CONFIG=debug
 
@@ -14,14 +14,17 @@ BINDIR=build/bin/$(BUILD_CONFIG)
 TARGET=$(BINDIR)/htcm-cpp
 
 
-.PHONY: compile clean
+.PHONY: pre-compile compile clean
 
-compile: $(TARGET)
+compile: pre-compile $(TARGET)
+
+pre-compile:
+	mkdir -p $(BINDIR)
+	mkdir -p $(OBJDIR)
 
 $(TARGET): $(OFILES)
 	$(CXX) -o $(TARGET) $(OFILES)
 
-$(OFILES:)
 $(OBJDIR)/%.o: src/%.cpp
 	$(CXX) -o $@ -c $(CXXFLAGS) $<
 
