@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <algorithm>
+#include <numeric>
 
 Encounter::Encounter(
 	std::vector<Agent *>&& agents,
@@ -9,9 +10,11 @@ Encounter::Encounter(
 	std::vector<Event *>&& events)
 	: Agents(agents), Skills(skills), Events(events)
 {
-	AgentsByAddr.resize(1000000);
+	uint64_t max_addr = 0;
+	for (auto agent : agents)
+		max_addr = std::max(max_addr, agent->addr);
+	AgentsByAddr.resize(max_addr+1);
 	for (auto agent: Agents) {
-		assert(agent->addr < AgentsByAddr.size());
 		AgentsByAddr[agent->addr] = agent;
 	}
 }

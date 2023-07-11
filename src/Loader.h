@@ -11,7 +11,7 @@ class Event;
 
 class Loader {
 public:
-	Loader(std::shared_ptr<BinaryReader> r)
+	Loader(BinaryReader *r)
 		: Reader(r)
 	{
 	}
@@ -20,5 +20,5 @@ public:
 	Skill *LoadSkill();
 	Event *LoadEvent();
 private:
-	std::shared_ptr<BinaryReader> Reader;
+	BinaryReader *Reader;
 };

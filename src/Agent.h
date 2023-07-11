@@ -35,4 +35,6 @@ public:
 	std::string name, account;
 	int subgroup;
 	uint32_t unused;
+	uint64_t first_aware, last_aware;
+	uint32_t instance_id;
 };

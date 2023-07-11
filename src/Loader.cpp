@@ -22,7 +22,7 @@ Encounter *Loader::LoadEncounter() {
 	uint8_t unused = 0;
 
 	(*Reader)
-		//.read_into(magic)
+		.read_into(magic)
 		.read_into(version)
 		.read(&revision)
 		.read(&bossId)

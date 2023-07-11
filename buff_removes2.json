@@ -1,0 +1,1247 @@
+[
+  {
+    "buff": "Protection",
+    "event": "buff_remove",
+    "id": 717
+  },
+  {
+    "buff": "Regeneration",
+    "event": "buff_remove",
+    "id": 718
+  },
+  {
+    "buff": "Swiftness",
+    "event": "buff_remove",
+    "id": 719
+  },
+  {
+    "buff": "Blinded",
+    "event": "buff_remove",
+    "id": 720
+  },
+  {
+    "buff": "Crippled",
+    "event": "buff_remove",
+    "id": 721
+  },
+  {
+    "buff": "Chilled",
+    "event": "buff_remove",
+    "id": 722
+  },
+  {
+    "buff": "Poisoned",
+    "event": "buff_remove",
+    "id": 723
+  },
+  {
+    "buff": "Fury",
+    "event": "buff_remove",
+    "id": 725
+  },
+  {
+    "buff": "Vigor",
+    "event": "buff_remove",
+    "id": 726
+  },
+  {
+    "buff": "Immobile",
+    "event": "buff_remove",
+    "id": 727
+  },
+  {
+    "buff": "Invisibility",
+    "event": "buff_remove",
+    "id": 728
+  },
+  {
+    "buff": "Bleeding",
+    "event": "buff_remove",
+    "id": 736
+  },
+  {
+    "buff": "Burning",
+    "event": "buff_remove",
+    "id": 737
+  },
+  {
+    "buff": "Vulnerability",
+    "event": "buff_remove",
+    "id": 738
+  },
+  {
+    "buff": "Might",
+    "event": "buff_remove",
+    "id": 740
+  },
+  {
+    "buff": "Weakness",
+    "event": "buff_remove",
+    "id": 742
+  },
+  {
+    "buff": "Aegis",
+    "event": "buff_remove",
+    "id": 743
+  },
+  {
+    "buff": "Determined",
+    "event": "buff_remove",
+    "id": 762
+  },
+  {
+    "buff": "Downed",
+    "event": "buff_remove",
+    "id": 770
+  },
+  {
+    "buff": "Determined",
+    "event": "buff_remove",
+    "id": 788
+  },
+  {
+    "buff": "Fear",
+    "event": "buff_remove",
+    "id": 791
+  },
+  {
+    "buff": "Blocking",
+    "event": "buff_remove",
+    "id": 814
+  },
+  {
+    "buff": "Daze",
+    "event": "buff_remove",
+    "id": 833
+  },
+  {
+    "buff": "Resurrection",
+    "event": "buff_remove",
+    "id": 848
+  },
+  {
+    "buff": "Confusion",
+    "event": "buff_remove",
+    "id": 861
+  },
+  {
+    "buff": "Stun",
+    "event": "buff_remove",
+    "id": 872
+  },
+  {
+    "buff": "Resolution",
+    "event": "buff_remove",
+    "id": 873
+  },
+  {
+    "buff": "Revealed",
+    "event": "buff_remove",
+    "id": 890
+  },
+  {
+    "buff": "Determined",
+    "event": "buff_remove",
+    "id": 895
+  },
+  {
+    "buff": "901",
+    "event": "buff_remove",
+    "id": 901
+  },
+  {
+    "buff": "917",
+    "event": "buff_remove",
+    "id": 917
+  },
+  {
+    "buff": "Stability",
+    "event": "buff_remove",
+    "id": 1122
+  },
+  {
+    "buff": "1176",
+    "event": "buff_remove",
+    "id": 1176
+  },
+  {
+    "buff": "Quickness",
+    "event": "buff_remove",
+    "id": 1187
+  },
+  {
+    "buff": "Frost Aura",
+    "event": "buff_remove",
+    "id": 5579
+  },
+  {
+    "buff": "Fire Aura",
+    "event": "buff_remove",
+    "id": 5677
+  },
+  {
+    "buff": "Elixir S",
+    "event": "buff_remove",
+    "id": 5863
+  },
+  {
+    "buff": "Net Turret",
+    "event": "buff_remove",
+    "id": 5894
+  },
+  {
+    "buff": "Rifle Turret",
+    "event": "buff_remove",
+    "id": 5902
+  },
+  {
+    "buff": "Heal Dispenser Toggle",
+    "event": "buff_remove",
+    "id": 5942
+  },
+  {
+    "buff": "Med Kit",
+    "event": "buff_remove",
+    "id": 5943
+  },
+  {
+    "buff": "Superspeed",
+    "event": "buff_remove",
+    "id": 5974
+  },
+  {
+    "buff": "Static Shield",
+    "event": "buff_remove",
+    "id": 6055
+  },
+  {
+    "buff": "Absorb",
+    "event": "buff_remove",
+    "id": 6056
+  },
+  {
+    "buff": "Net",
+    "event": "buff_remove",
+    "id": 6116
+  },
+  {
+    "buff": "Bloodlust",
+    "event": "buff_remove",
+    "id": 9286
+  },
+  {
+    "buff": "9297",
+    "event": "buff_remove",
+    "id": 9297
+  },
+  {
+    "buff": "+5% Damage",
+    "event": "buff_remove",
+    "id": 9322
+  },
+  {
+    "buff": "9719",
+    "event": "buff_remove",
+    "id": 9719
+  },
+  {
+    "buff": "Nourishment",
+    "event": "buff_remove",
+    "id": 9750
+  },
+  {
+    "buff": "Enhancement",
+    "event": "buff_remove",
+    "id": 9963
+  },
+  {
+    "buff": "Nourishment",
+    "event": "buff_remove",
+    "id": 10110
+  },
+  {
+    "buff": "Portal Weaving",
+    "event": "buff_remove",
+    "id": 10198
+  },
+  {
+    "buff": "Distortion",
+    "event": "buff_remove",
+    "id": 10243
+  },
+  {
+    "buff": "Hide in Shadows",
+    "event": "buff_remove",
+    "id": 10269
+  },
+  {
+    "buff": "Riposte",
+    "event": "buff_remove",
+    "id": 10279
+  },
+  {
+    "buff": "10371",
+    "event": "buff_remove",
+    "id": 10371
+  },
+  {
+    "buff": "Stealth",
+    "event": "buff_remove",
+    "id": 13017
+  },
+  {
+    "buff": "13700",
+    "event": "buff_remove",
+    "id": 13700
+  },
+  {
+    "buff": "13705",
+    "event": "buff_remove",
+    "id": 13705
+  },
+  {
+    "buff": "13747",
+    "event": "buff_remove",
+    "id": 13747
+  },
+  {
+    "buff": "13757",
+    "event": "buff_remove",
+    "id": 13757
+  },
+  {
+    "buff": "13759",
+    "event": "buff_remove",
+    "id": 13759
+  },
+  {
+    "buff": "13780",
+    "event": "buff_remove",
+    "id": 13780
+  },
+  {
+    "buff": "13783",
+    "event": "buff_remove",
+    "id": 13783
+  },
+  {
+    "buff": "13795",
+    "event": "buff_remove",
+    "id": 13795
+  },
+  {
+    "buff": "15742",
+    "event": "buff_remove",
+    "id": 15742
+  },
+  {
+    "buff": "Portal Uses",
+    "event": "buff_remove",
+    "id": 16553
+  },
+  {
+    "buff": "No Proc Buff",
+    "event": "buff_remove",
+    "id": 17273
+  },
+  {
+    "buff": "Torment",
+    "event": "buff_remove",
+    "id": 19426
+  },
+  {
+    "buff": "Signet of the Ether",
+    "event": "buff_remove",
+    "id": 21751
+  },
+  {
+    "buff": "21796",
+    "event": "buff_remove",
+    "id": 21796
+  },
+  {
+    "buff": "+5% Damage",
+    "event": "buff_remove",
+    "id": 24148
+  },
+  {
+    "buff": "24298",
+    "event": "buff_remove",
+    "id": 24298
+  },
+  {
+    "buff": "Light Aura",
+    "event": "buff_remove",
+    "id": 25518
+  },
+  {
+    "buff": "25523",
+    "event": "buff_remove",
+    "id": 25523
+  },
+  {
+    "buff": "Superior Sigil of Cruelty",
+    "event": "buff_remove",
+    "id": 25526
+  },
+  {
+    "buff": "Enhancement",
+    "event": "buff_remove",
+    "id": 25879
+  },
+  {
+    "buff": "Rite of the Great Dwarf",
+    "event": "buff_remove",
+    "id": 26596
+  },
+  {
+    "buff": "26670",
+    "event": "buff_remove",
+    "id": 26670
+  },
+  {
+    "buff": "Purifying Essence",
+    "event": "buff_remove",
+    "id": 26738
+  },
+  {
+    "buff": "Slow",
+    "event": "buff_remove",
+    "id": 26766
+  },
+  {
+    "buff": "26823",
+    "event": "buff_remove",
+    "id": 26823
+  },
+  {
+    "buff": "Jade",
+    "event": "buff_remove",
+    "id": 26925
+  },
+  {
+    "buff": "26955",
+    "event": "buff_remove",
+    "id": 26955
+  },
+  {
+    "buff": "Resistance",
+    "event": "buff_remove",
+    "id": 26980
+  },
+  {
+    "buff": "Legendary Dwarf Stance",
+    "event": "buff_remove",
+    "id": 27205
+  },
+  {
+    "buff": "27334",
+    "event": "buff_remove",
+    "id": 27334
+  },
+  {
+    "buff": "Facet of Light",
+    "event": "buff_remove",
+    "id": 27336
+  },
+  {
+    "buff": "Facet of Strength",
+    "event": "buff_remove",
+    "id": 27376
+  },
+  {
+    "buff": "27428",
+    "event": "buff_remove",
+    "id": 27428
+  },
+  {
+    "buff": "27455",
+    "event": "buff_remove",
+    "id": 27455
+  },
+  {
+    "buff": "27556",
+    "event": "buff_remove",
+    "id": 27556
+  },
+  {
+    "buff": "27560",
+    "event": "buff_remove",
+    "id": 27560
+  },
+  {
+    "buff": "27569",
+    "event": "buff_remove",
+    "id": 27569
+  },
+  {
+    "buff": "Impossible Odds",
+    "event": "buff_remove",
+    "id": 27581
+  },
+  {
+    "buff": "27615",
+    "event": "buff_remove",
+    "id": 27615
+  },
+  {
+    "buff": "27623",
+    "event": "buff_remove",
+    "id": 27623
+  },
+  {
+    "buff": "27674",
+    "event": "buff_remove",
+    "id": 27674
+  },
+  {
+    "buff": "Taunt",
+    "event": "buff_remove",
+    "id": 27705
+  },
+  {
+    "buff": "Legendary Dragon Stance",
+    "event": "buff_remove",
+    "id": 27732
+  },
+  {
+    "buff": "Infuse Light",
+    "event": "buff_remove",
+    "id": 27737
+  },
+  {
+    "buff": "Legendary Assassin Stance",
+    "event": "buff_remove",
+    "id": 27890
+  },
+  {
+    "buff": "Legendary Centaur Stance",
+    "event": "buff_remove",
+    "id": 27972
+  },
+  {
+    "buff": "Facet of Chaos",
+    "event": "buff_remove",
+    "id": 27983
+  },
+  {
+    "buff": "Facet of Darkness",
+    "event": "buff_remove",
+    "id": 28036
+  },
+  {
+    "buff": "28133",
+    "event": "buff_remove",
+    "id": 28133
+  },
+  {
+    "buff": "Facet of Elements",
+    "event": "buff_remove",
+    "id": 28243
+  },
+  {
+    "buff": "28268",
+    "event": "buff_remove",
+    "id": 28268
+  },
+  {
+    "buff": "28356",
+    "event": "buff_remove",
+    "id": 28356
+  },
+  {
+    "buff": "28438",
+    "event": "buff_remove",
+    "id": 28438
+  },
+  {
+    "buff": "28481",
+    "event": "buff_remove",
+    "id": 28481
+  },
+  {
+    "buff": "Stability Balance",
+    "event": "buff_remove",
+    "id": 28502
+  },
+  {
+    "buff": "28543",
+    "event": "buff_remove",
+    "id": 28543
+  },
+  {
+    "buff": "Enchanted Daggers",
+    "event": "buff_remove",
+    "id": 28557
+  },
+  {
+    "buff": "28610",
+    "event": "buff_remove",
+    "id": 28610
+  },
+  {
+    "buff": "29214",
+    "event": "buff_remove",
+    "id": 29214
+  },
+  {
+    "buff": "Facet of Nature",
+    "event": "buff_remove",
+    "id": 29275
+  },
+  {
+    "buff": "Reaper's Shroud",
+    "event": "buff_remove",
+    "id": 29446
+  },
+  {
+    "buff": "29685",
+    "event": "buff_remove",
+    "id": 29685
+  },
+  {
+    "buff": "29696",
+    "event": "buff_remove",
+    "id": 29696
+  },
+  {
+    "buff": "Infusing Terror",
+    "event": "buff_remove",
+    "id": 30129
+  },
+  {
+    "buff": "Med Blaster",
+    "event": "buff_remove",
+    "id": 30235
+  },
+  {
+    "buff": "Leeching Bolts",
+    "event": "buff_remove",
+    "id": 30301
+  },
+  {
+    "buff": "Leeching Bolts",
+    "event": "buff_remove",
+    "id": 30319
+  },
+  {
+    "buff": "Alacrity",
+    "event": "buff_remove",
+    "id": 30328
+  },
+  {
+    "buff": "Fencer's Finesse",
+    "event": "buff_remove",
+    "id": 30426
+  },
+  {
+    "buff": "30715",
+    "event": "buff_remove",
+    "id": 30715
+  },
+  {
+    "buff": "Signet of Humility",
+    "event": "buff_remove",
+    "id": 30739
+  },
+  {
+    "buff": "30751",
+    "event": "buff_remove",
+    "id": 30751
+  },
+  {
+    "buff": "31182",
+    "event": "buff_remove",
+    "id": 31182
+  },
+  {
+    "buff": "Watchful Eye",
+    "event": "buff_remove",
+    "id": 31229
+  },
+  {
+    "buff": "31514",
+    "event": "buff_remove",
+    "id": 31514
+  },
+  {
+    "buff": "Exposed",
+    "event": "buff_remove",
+    "id": 31589
+  },
+  {
+    "buff": "31675",
+    "event": "buff_remove",
+    "id": 31675
+  },
+  {
+    "buff": "32690",
+    "event": "buff_remove",
+    "id": 32690
+  },
+  {
+    "buff": "Reaper's Frost",
+    "event": "buff_remove",
+    "id": 33423
+  },
+  {
+    "buff": "34093",
+    "event": "buff_remove",
+    "id": 34093
+  },
+  {
+    "buff": "34096",
+    "event": "buff_remove",
+    "id": 34096
+  },
+  {
+    "buff": "34098",
+    "event": "buff_remove",
+    "id": 34098
+  },
+  {
+    "buff": "34111",
+    "event": "buff_remove",
+    "id": 34111
+  },
+  {
+    "buff": "34523",
+    "event": "buff_remove",
+    "id": 34523
+  },
+  {
+    "buff": "34546",
+    "event": "buff_remove",
+    "id": 34546
+  },
+  {
+    "buff": "38134",
+    "event": "buff_remove",
+    "id": 38134
+  },
+  {
+    "buff": "38762",
+    "event": "buff_remove",
+    "id": 38762
+  },
+  {
+    "buff": "38793",
+    "event": "buff_remove",
+    "id": 38793
+  },
+  {
+    "buff": "Dark Aura",
+    "event": "buff_remove",
+    "id": 39978
+  },
+  {
+    "buff": "Diminished",
+    "event": "buff_remove",
+    "id": 46668
+  },
+  {
+    "buff": "Expose Defenses",
+    "event": "buff_remove",
+    "id": 48894
+  },
+  {
+    "buff": "49054",
+    "event": "buff_remove",
+    "id": 49054
+  },
+  {
+    "buff": "Signet of the Ether",
+    "event": "buff_remove",
+    "id": 49103
+  },
+  {
+    "buff": "49116",
+    "event": "buff_remove",
+    "id": 49116
+  },
+  {
+    "buff": "51391",
+    "event": "buff_remove",
+    "id": 51391
+  },
+  {
+    "buff": "51648",
+    "event": "buff_remove",
+    "id": 51648
+  },
+  {
+    "buff": "Burst of Strength",
+    "event": "buff_remove",
+    "id": 51653
+  },
+  {
+    "buff": "51659",
+    "event": "buff_remove",
+    "id": 51659
+  },
+  {
+    "buff": "51666",
+    "event": "buff_remove",
+    "id": 51666
+  },
+  {
+    "buff": "Facet of Nature—Dragon",
+    "event": "buff_remove",
+    "id": 51674
+  },
+  {
+    "buff": "Facet of Nature—Dwarf",
+    "event": "buff_remove",
+    "id": 51677
+  },
+  {
+    "buff": "Facet of Nature",
+    "event": "buff_remove",
+    "id": 51681
+  },
+  {
+    "buff": "Facet of Chaos",
+    "event": "buff_remove",
+    "id": 51685
+  },
+  {
+    "buff": "51686",
+    "event": "buff_remove",
+    "id": 51686
+  },
+  {
+    "buff": "Facet of Light",
+    "event": "buff_remove",
+    "id": 51690
+  },
+  {
+    "buff": "Facet of Darkness",
+    "event": "buff_remove",
+    "id": 51695
+  },
+  {
+    "buff": "Facet of Strength",
+    "event": "buff_remove",
+    "id": 51700
+  },
+  {
+    "buff": "51703",
+    "event": "buff_remove",
+    "id": 51703
+  },
+  {
+    "buff": "Facet of Elements",
+    "event": "buff_remove",
+    "id": 51706
+  },
+  {
+    "buff": "51708",
+    "event": "buff_remove",
+    "id": 51708
+  },
+  {
+    "buff": "51709",
+    "event": "buff_remove",
+    "id": 51709
+  },
+  {
+    "buff": "Branded Accumulation",
+    "event": "buff_remove",
+    "id": 52182
+  },
+  {
+    "buff": "52249",
+    "event": "buff_remove",
+    "id": 52249
+  },
+  {
+    "buff": "52260",
+    "event": "buff_remove",
+    "id": 52260
+  },
+  {
+    "buff": "52902",
+    "event": "buff_remove",
+    "id": 52902
+  },
+  {
+    "buff": "53079",
+    "event": "buff_remove",
+    "id": 53079
+  },
+  {
+    "buff": "Superior Rune of the Monk",
+    "event": "buff_remove",
+    "id": 53285
+  },
+  {
+    "buff": "Soul Barbs",
+    "event": "buff_remove",
+    "id": 53489
+  },
+  {
+    "buff": "55993",
+    "event": "buff_remove",
+    "id": 55993
+  },
+  {
+    "buff": "56610",
+    "event": "buff_remove",
+    "id": 56610
+  },
+  {
+    "buff": "56913",
+    "event": "buff_remove",
+    "id": 56913
+  },
+  {
+    "buff": "Explosive Entrance",
+    "event": "buff_remove",
+    "id": 59579
+  },
+  {
+    "buff": "Big Boomer",
+    "event": "buff_remove",
+    "id": 59601
+  },
+  {
+    "buff": "59604",
+    "event": "buff_remove",
+    "id": 59604
+  },
+  {
+    "buff": "Targeted",
+    "event": "buff_remove",
+    "id": 60517
+  },
+  {
+    "buff": "61778",
+    "event": "buff_remove",
+    "id": 61778
+  },
+  {
+    "buff": "62505",
+    "event": "buff_remove",
+    "id": 62505
+  },
+  {
+    "buff": "62531",
+    "event": "buff_remove",
+    "id": 62531
+  },
+  {
+    "buff": "62544",
+    "event": "buff_remove",
+    "id": 62544
+  },
+  {
+    "buff": "62547",
+    "event": "buff_remove",
+    "id": 62547
+  },
+  {
+    "buff": "62580",
+    "event": "buff_remove",
+    "id": 62580
+  },
+  {
+    "buff": "62583",
+    "event": "buff_remove",
+    "id": 62583
+  },
+  {
+    "buff": "62589",
+    "event": "buff_remove",
+    "id": 62589
+  },
+  {
+    "buff": "62604",
+    "event": "buff_remove",
+    "id": 62604
+  },
+  {
+    "buff": "62613",
+    "event": "buff_remove",
+    "id": 62613
+  },
+  {
+    "buff": "62644",
+    "event": "buff_remove",
+    "id": 62644
+  },
+  {
+    "buff": "62645",
+    "event": "buff_remove",
+    "id": 62645
+  },
+  {
+    "buff": "62658",
+    "event": "buff_remove",
+    "id": 62658
+  },
+  {
+    "buff": "62666",
+    "event": "buff_remove",
+    "id": 62666
+  },
+  {
+    "buff": "62673",
+    "event": "buff_remove",
+    "id": 62673
+  },
+  {
+    "buff": "62704",
+    "event": "buff_remove",
+    "id": 62704
+  },
+  {
+    "buff": "62728",
+    "event": "buff_remove",
+    "id": 62728
+  },
+  {
+    "buff": "Forerunner of Death",
+    "event": "buff_remove",
+    "id": 62811
+  },
+  {
+    "buff": "62934",
+    "event": "buff_remove",
+    "id": 62934
+  },
+  {
+    "buff": "62991",
+    "event": "buff_remove",
+    "id": 62991
+  },
+  {
+    "buff": "Barrier Signet",
+    "event": "buff_remove",
+    "id": 63064
+  },
+  {
+    "buff": "Shift Signet",
+    "event": "buff_remove",
+    "id": 63068
+  },
+  {
+    "buff": "63103",
+    "event": "buff_remove",
+    "id": 63103
+  },
+  {
+    "buff": "63180",
+    "event": "buff_remove",
+    "id": 63180
+  },
+  {
+    "buff": "63187",
+    "event": "buff_remove",
+    "id": 63187
+  },
+  {
+    "buff": "Deadly Blades",
+    "event": "buff_remove",
+    "id": 63409
+  },
+  {
+    "buff": "Aerial Defense",
+    "event": "buff_remove",
+    "id": 63605
+  },
+  {
+    "buff": "63615",
+    "event": "buff_remove",
+    "id": 63615
+  },
+  {
+    "buff": "63705",
+    "event": "buff_remove",
+    "id": 63705
+  },
+  {
+    "buff": "63847",
+    "event": "buff_remove",
+    "id": 63847
+  },
+  {
+    "buff": "63897",
+    "event": "buff_remove",
+    "id": 63897
+  },
+  {
+    "buff": "64247",
+    "event": "buff_remove",
+    "id": 64247
+  },
+  {
+    "buff": "64286",
+    "event": "buff_remove",
+    "id": 64286
+  },
+  {
+    "buff": "Influence of the Void",
+    "event": "buff_remove",
+    "id": 64524
+  },
+  {
+    "buff": "64704",
+    "event": "buff_remove",
+    "id": 64704
+  },
+  {
+    "buff": "64887",
+    "event": "buff_remove",
+    "id": 64887
+  },
+  {
+    "buff": "64903",
+    "event": "buff_remove",
+    "id": 64903
+  },
+  {
+    "buff": "Cosmic Meteor",
+    "event": "buff_remove",
+    "id": 65416
+  },
+  {
+    "buff": "Void Shell",
+    "event": "buff_remove",
+    "id": 65563
+  },
+  {
+    "buff": "Void Repulsion",
+    "event": "buff_remove",
+    "id": 65577
+  },
+  {
+    "buff": "65589",
+    "event": "buff_remove",
+    "id": 65589
+  },
+  {
+    "buff": "65661",
+    "event": "buff_remove",
+    "id": 65661
+  },
+  {
+    "buff": "Void Repulsion",
+    "event": "buff_remove",
+    "id": 65729
+  },
+  {
+    "buff": "66210",
+    "event": "buff_remove",
+    "id": 66210
+  },
+  {
+    "buff": "66268",
+    "event": "buff_remove",
+    "id": 66268
+  },
+  {
+    "buff": "66412",
+    "event": "buff_remove",
+    "id": 66412
+  },
+  {
+    "buff": "66507",
+    "event": "buff_remove",
+    "id": 66507
+  },
+  {
+    "buff": "66550",
+    "event": "buff_remove",
+    "id": 66550
+  },
+  {
+    "buff": "Void Immunity",
+    "event": "buff_remove",
+    "id": 66800
+  },
+  {
+    "buff": "66864",
+    "event": "buff_remove",
+    "id": 66864
+  },
+  {
+    "buff": "67144",
+    "event": "buff_remove",
+    "id": 67144
+  },
+  {
+    "buff": "67202",
+    "event": "buff_remove",
+    "id": 67202
+  },
+  {
+    "buff": "67654",
+    "event": "buff_remove",
+    "id": 67654
+  },
+  {
+    "buff": "Infirmity",
+    "event": "buff_remove",
+    "id": 67965
+  },
+  {
+    "buff": "Debilitated",
+    "event": "buff_remove",
+    "id": 67972
+  },
+  {
+    "buff": "Purifying Essence",
+    "event": "buff_remove",
+    "id": 68063
+  },
+  {
+    "buff": "Tranquil",
+    "event": "buff_remove",
+    "id": 68065
+  },
+  {
+    "buff": "Achievement Eligibility: Voidwalker",
+    "event": "buff_remove",
+    "id": 68066
+  },
+  {
+    "buff": "Void Empowerment",
+    "event": "buff_remove",
+    "id": 68083
+  },
+  {
+    "buff": "68108",
+    "event": "buff_remove",
+    "id": 68108
+  },
+  {
+    "buff": "68110",
+    "event": "buff_remove",
+    "id": 68110
+  },
+  {
+    "buff": "68122",
+    "event": "buff_remove",
+    "id": 68122
+  },
+  {
+    "buff": "68123",
+    "event": "buff_remove",
+    "id": 68123
+  },
+  {
+    "buff": "Achievement Eligibility: Standing Together",
+    "event": "buff_remove",
+    "id": 68130
+  },
+  {
+    "buff": "68265",
+    "event": "buff_remove",
+    "id": 68265
+  },
+  {
+    "buff": "Mechanical Genius",
+    "event": "buff_remove",
+    "id": 68612
+  }
+]

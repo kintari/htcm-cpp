@@ -10,7 +10,9 @@
 #include <iostream>
 #include <map>
 #include <numeric>
+#include <ranges>
 #include <regex>
+#include <set>
 #include <vector>
 
 #include "Agent.h"
@@ -19,22 +21,27 @@
 #include "Event.h"
 #include "Loader.h"
 #include "Skill.h"
+#include "Phase.h"
 
 #include "MemoryStream.h"
 #include "zip.h"
 
 #include <nlohmann/json.hpp>
 
+#include "zlib.h"
+
 using json = nlohmann::json;
 
+
+
+// phase transitions
 // cause of death
 // mechanics check
 // who hit orb
-// cc check
+// cc check (breakdown, timings)
 // revealed
 // food / util
 // achievement eligibility
-
 
 template <typename... Ts>
 void print(Ts... ts)
@@ -50,270 +57,266 @@ void println(Ts... ts)
 	print(ts..., '\n');
 }
 
-class Main
-{
-public:
+// invisibility: 728
+// hide in shadows: 10269
+// stealth: 13017
+// dwarf rite: 26596
+// diminished: 46668
+// targeted: 60517
+// influence of the void: 64524
+// infirmity: 67965
+// debilitated: 67972
+// voidwalker: 68066
+// void empowerment: 68083
 
-	Main(const std::vector<std::string> &&args) : Args(std::move(args)) {}
+void summarize(Encounter *encounter) {
 
-	int Run();
+	auto time_base = encounter->Events[0]->time;
+	auto phase = Phase::NONE;
 
-protected:
-
-	struct StrikeDamage {
-		uint64_t time;
-		Agent &attacker, &target;
-		Skill &skill;
-		int amount;
-	};
-
-	struct BuffRemove {
-		uint64_t time;
-		Agent &instigator, &target;
-		Skill &buff;
-	};
-
-	void OnStrikeDamage(const StrikeDamage &);
-	void OnBuffRemove(const BuffRemove &);
-
-private:
-	const std::vector<std::string> Args;
-};
-
-void Main::OnBuffRemove(const BuffRemove& event) {
-	//assert(skill); // 'skill' is the buff that was removed
-	auto message = json {
-		{ "time", event.time },
-		{ "agent", {
-			{ "id", event.target.addr },
-			{ "name", event.target.name }
-		}},
-		{ "buff", {
-			{ "id", event.buff.id },
-			{ "name", event.buff.name },
-			{ "remove", 1 }
-		}}
-	};
-	std::cout << message << std::endl;
-}
-
-
-
-
-int Main::Run() {
-/*
-	if (Args.size() > 0) {
-			if (false) {
-
-				// zip file
-				printf("is a zip file\n");
-
-				// locate the 'end of central directory' record
-				size_t offset = st.st_size - 4;
-				while (offset > 0) {
-					uint32_t value = *(const uint32_t *) &data[offset];
-					if (value == 0x06054b50) {
-						printf("found eocd magic at %zu bytes (eof-%zu)\n", offset, st.st_size - offset);
-						zip_eocd_t *eocd = (zip_eocd_t *) &data[offset];
-						printf("num_cdir_recs=%d\n", eocd->num_cdir_recs);
-						printf("cdir_size=%d\n", eocd->cdir_size);
-						printf("cdir_start=%d\n", eocd->cdir_start);
-
-
+	uint64_t max_time = 0;
+	for (auto event: encounter->Events) {
+		max_time = std::max(max_time, event->time);
+	}
+	
+	for (auto e: encounter->Events) {
+		if (!e->is_statechange && e->src_agent != 0) {
+			Agent *src_agent = encounter->GetAgentByAddr(e->src_agent);
+			if (src_agent != nullptr) {
+				src_agent->instance_id = e->src_instid;
 			}
-			else if (magic == ) {
-				printf("is an evtc file\n");
-			}
-			else {
-				printf("unknown file type\n");
-			}
-			
-			//BinaryReader reader(arg);
-			//reader.read(&magic);
-			uint32_t magic = 0;
-			if (magic == 0x04034b50) {
-				// zip file
-				printf("is a zip file\n");
-				std::array<uint8_t,512> buf;
-				
-				//fread()
-			}
-			else if (magic == 0x43545645) {
-				printf("is an evtc file\n");
-				//Loader loader(reader);
-				//Encounter *encounter = loader.LoadEncounter();
-				Encounter *encounter = nullptr;
-				for (auto skill : encounter->Skills)
-				{
-					// std::cout << skill->id << std::endl;
-					// std::cout << std::string(&skill->name[0]) << std::endl;
-				}
-				auto time_base = encounter->Events[0]->time;
-				for (size_t i = 0; i < encounter->Events.size(); i++)
-				{
-					Event *event = encounter->Events[i];
-					uint64_t time = event->time - time_base;
-					Agent *src_agent = encounter->GetAgentByAddr(event->src_agent);
-					Agent *dst_agent = encounter->GetAgentByAddr(event->dst_agent);
-					Skill *skill = encounter->GetSkill(event->skillid);
-					if (event->is_statechange)
-					{
-							switch (event->is_statechange)
-						{
-						case CBTS_CHANGEDEAD:
-							OnDead(EventData{encounter, time, event, src_agent});
-							break;
-						case CBTS_CHANGEDOWN:
-							OnDown(EventData{encounter, time, event, src_agent});
-							break;
-						case CBTS_CHANGEUP:
-							OnUp(EventData{encounter, time, event, src_agent});
-							break;
-						}
-					}
-					else if (event->is_activation)
-					{
-					}
-					else if (event->is_buffremove)
-					{
-						
-					}
-					else if (event->buff != 0)
-					{
-					}
-					else
-					{
-						auto agent = json {
-							{ "id", event->src_agent },
-							{ "name", src_agent ? src_agent->name : std::to_string(event->src_agent) }
-						};
-						auto target = json {
-							{ "id", dst_agent->addr },
-							{ "name", dst_agent->name }
-						};
-						auto message = json {
-							{ "time", time },
-							{ "agent", agent },
-							{ "strike", {
-								{ "target", target },
-								{ "amount", event->value },
-								{ "skill", skill->name }
-							}}
-						};
-						std::cout << message << std::endl;
-						message = json {
-							{ "time", time },
-							{ "agent", target },
-							{ "struck", {
-								{ "attacker", agent },
-								{ "amount", event->value },
-								{ "skill", skill->name }
-							}}
-						};
-						std::cout << message << std::endl;
-						//OnStrikeDamage(StrikeDamage{time, *src_agent, *dst_agent, *skill, event->value});
-					}
-				}
-			}		
 		}
 	}
-	*/
-	return 0;
+
+	for (auto agent: encounter->Agents) {
+		auto f = [=](const Event *e) {
+			return !e->is_statechange && e->src_agent == agent->addr;
+		};
+		auto iter0 = std::find_if(
+			encounter->Events.begin(),
+			encounter->Events.end(),
+			f
+		);
+		agent->first_aware = iter0 != encounter->Events.end() ? (*iter0)->time : 0;
+		auto iter1 = std::find_if(
+			encounter->Events.rbegin(),
+			encounter->Events.rend(),
+			f
+		);
+		agent->last_aware =
+			iter1 != encounter->Events.rend() ?
+			(*iter1)->time :
+			std::numeric_limits<uint64_t>::max();
+	}
+
+	for (auto e: encounter->Events) {
+		Agent *src_agent = encounter->GetAgentByAddr(e->src_agent);
+		if (src_agent && !e->is_statechange) {
+			src_agent->first_aware = std::min(src_agent->first_aware, e->time);
+			src_agent->last_aware = std::max(src_agent->last_aware, e->time);
+		}
+	}
+
+	std::vector<const Agent *> orbs;
+	for (auto e: encounter->Events) {
+		if (e->is_statechange == CBTS_BREAKBARSTATE) {
+			if (e->value == 0) {
+				const Agent *src_agent = encounter->GetAgentByAddr(e->src_agent);
+				if (src_agent->name == "Void Amalgamate") {
+					orbs.push_back(src_agent);
+				}
+			}
+		}
+	}
+
+	for (auto e: encounter->Events) {
+		const Agent *src_agent = encounter->GetAgentByAddr(e->src_agent);
+		if (e->is_statechange == CBTS_SPAWN) {
+			if (src_agent) {
+				if (phase == Phase::JORMAG && src_agent->name == "Void Warforged") {
+					phase = Phase::PRIMORDUS;
+				}
+				else if (phase == Phase::PRIMORDUS && src_agent->name == "Void Brandbomber") {
+					phase = Phase::KRALKATORRIK;
+				}
+				else if (phase == Phase::KRALKATORRIK && src_agent->name == "Void Time Caster") {
+					phase = Phase::PURIFICATION2;
+				}
+			}
+		}
+		else if (e->is_statechange == CBTS_BREAKBARSTATE) {
+			if (e->value == 0) {
+				if (e->src_agent == orbs[0]->addr) {
+					phase = Phase::JORMAG;
+				}
+				else if (e->src_agent == orbs[1]->addr) {
+					phase = Phase::MORDREMOTH;
+				}
+			}
+		}
+		else if (e->is_statechange == CBTS_HEALTHUPDATE) {
+			if (src_agent && src_agent->name == "Void Amalgamate") {
+				
+			}
+		}
+	}
+
+	for (auto orb: orbs) {
+		println("orb: ", orb->addr);
+	}
+
+	
 }
 
-void Main::OnStrikeDamage(const StrikeDamage &strike)
-{
-	// std::string skill_name = skill == nullptr ? "unknown_skill" : &skill->name[0];
-	// std::string attacker_name = attacker ? attacker->name : "???";
-	// std::string target_name = target ? target->name : "???";
-	if (strike.attacker.IsPlayer())
-	{
-		auto message = json{
-			{ "player", {
-				{ "name", strike.attacker.name }
-			}},
-			{ "event", {
-				{ "type", "strike" },
-				{ "time", strike.time },
-				{ "target", strike.target.name },
-				{"skill", {
-						{ "name", strike.skill.name },
-						{ "amount", strike.amount }
-				}}
-			}}
-		};
-		std::cout << message << std::endl;
-	}
-	else
-	{
-	}
-}
+typedef struct {
+	void *bytes;
+	size_t size;
+} buf_t;
 
 #define EVTC_FILE_MAGIC 0x43545645
 
-bool scan_for_magic(size_t *resultp, uint32_t magic, const void *buf, size_t length) {
-	const uint8_t *bytes = (const uint8_t *) buf;
-	for (size_t offset = 0; offset + 4 < length; offset++) {
-		uint32_t value = *(uint32_t *) &bytes[offset];
-		if (value == magic) {
-			*resultp = offset;
-			return true;
+#define ERR_FILE_FORMAT -1
+
+int parse_evtc(const buf_t *buf) {
+	
+	const uint8_t *bytes = (const uint8_t *) buf->bytes;
+
+	/* check file signature */
+	if (*(uint32_t *)(bytes) != EVTC_FILE_MAGIC) {
+		return ERR_FILE_FORMAT;
+	}
+	
+	std::vector<uint8_t> vec(bytes, bytes + buf->size);
+	MemoryStream stream(std::move(vec));
+	BinaryReader reader(&stream);
+	Loader loader(&reader);
+	Encounter *e = loader.LoadEncounter();
+	if (e) {
+		summarize(e);
+	}
+	return 0;
+}
+
+static bool verify_fail(const char *cond) {
+	fprintf(stderr, "error: failed verify(): %s\n", cond);
+	return false;
+}
+
+#define verify(cond) ((cond) || verify_fail(#cond))
+
+zip_eocd_t *zip_get_eocd(const buf_t *buf) {
+	if (buf->size >= 4) {
+		const uint8_t *bytes = (const uint8_t *) buf->bytes;
+		for (size_t offset = buf->size - 4; offset >= 0; offset--) {
+			uint32_t value = *(const uint32_t *) &bytes[offset];
+			if (value == ZIP_EOCD_MAGIC) {
+				return (zip_eocd_t *) &bytes[offset];
+			}
 		}
+	}
+	return NULL;
+}
+
+bool get_file_size(size_t *size_out, FILE * f) {
+	struct stat st = { 0 };
+	bool result = fstat(fileno(f), &st) == 0;
+	if (verify(result))
+		if (size_out)
+			*size_out = st.st_size;
+	return result;
+}
+
+bool load_file(buf_t *buf, const char *filename) {
+	bool result = false;
+	FILE *f = fopen(filename, "rb");
+	if (f) {
+		size_t size = 0;
+		if (get_file_size(&size, f)) {
+			uint8_t *bytes = (uint8_t *) malloc(size);
+			if (bytes) {
+				if (fread(bytes, 1, size, f) == size) {
+					buf->bytes = bytes;
+					buf->size = size;
+					fclose(f);
+					return true;
+				}
+				free(bytes);
+				bytes = 0;
+			}
+		}
+		fclose(f);
 	}
 	return false;
 }
 
+bool decompress_file(buf_t *decompressed, const buf_t *compressed) {
+	int err;
+	z_stream d_stream; /* decompression stream */
+	memset(&d_stream, 0, sizeof(d_stream));
+
+	d_stream.next_in  = (uint8_t *) compressed->bytes;
+	//d_stream.avail_in = 0;
+	d_stream.next_out = (uint8_t *) decompressed->bytes;
+
+	err = inflateInit2(&d_stream, -15);
+	if (err != Z_OK) {
+		fprintf(stderr, "[zlib error] inflateInit2 -> %s (%d)\n", d_stream.msg, err);
+		return false;
+	}
+	else {
+		d_stream.avail_in = compressed->size;
+		d_stream.avail_out = decompressed->size;
+		err = inflate(&d_stream, Z_FINISH);
+		bool ok = err == Z_STREAM_END;
+		if (!ok)
+			fprintf(stderr, "[zlib error] inflate -> %s (%d)\n", d_stream.msg, err);
+		inflateEnd(&d_stream);
+		return ok;
+	}
+}
+
+#define BYTES(x) ((uint8_t *)(x))
+
 void analyze_file(const char *filename) {
-	FILE *f = fopen(filename, "rb");
-	if (f) {
-		struct stat st = { 0 };
-		int res = fstat(fileno(f), &st);
-		assert(res == 0);
-		printf("st.st_size=%zu\n", st.st_size);
-		if (st.st_size > 0) {
-			uint8_t *buf = (uint8_t *) malloc(st.st_size);
-			assert(buf);
-			if (buf) {
-				size_t num_read = fread(buf, 1, st.st_size, f);
-				assert(num_read == st.st_size);
-				if (num_read == st.st_size) {
-					uint32_t magic = *(uint32_t *) buf;
-					printf("magic=0x%08x\n", magic);
-					if (magic == ZIP_FILE_MAGIC) {
-
-						size_t eocd_offset;
-						if (scan_for_magic(&eocd_offset, ZIP_EOCD_MAGIC, buf, num_read)) {
-
-							/* keep scanning to find the last occurence */
-							while (eocd_offset + 4 < num_read)
-								if (!scan_for_magic(&eocd_offset, ZIP_EOCD_MAGIC, &buf[eocd_offset+4], num_read-eocd_offset-4))
+	buf_t buf = { NULL, 0 };
+	if (load_file(&buf, filename)) {
+		//printf("buf.size=%zu\n", buf.size);
+		if (buf.size > 0) {
+			uint32_t magic = *(uint32_t *) buf.bytes;
+			//printf("magic=0x%08x\n", magic);
+			if (magic == ZIP_FILE_MAGIC) {
+				zip_eocd_t *eocd = zip_get_eocd(&buf);
+				if (eocd) {
+					zip_cd_file_t *cdir = (zip_cd_file_t *)(((uint8_t *)(buf.bytes))+eocd->cdir_start);
+					for (size_t i = 0; i < eocd->num_cdir_recs; i++) {
+						zip_cd_file_t *hdr = &cdir[i];
+						if (hdr) {
+							zip_lfh_t *lfh = (zip_lfh_t *)(BYTES(buf.bytes) + hdr->local_file_header);
+							char *lfh_filename = (char *) &lfh[1];
+							char *extra = lfh_filename + lfh->filename_len;
+							char *data = extra + lfh->extra_field_len;
+							//char *comment = extra + hdr->extra_field_len;
+							buf_t compressed = {
+								data,
+								lfh->compressed_size
+							};
+							buf_t decompressed = {
+								malloc(lfh->uncompressed_size),
+								lfh->uncompressed_size
+							};
+							decompress_file(&decompressed, &compressed);
+							int res = parse_evtc(&decompressed);
+							switch (res) {
+								case ERR_FILE_FORMAT:
+									fprintf(stderr, "%s[%.*s] is not a valid evtc file\n", filename, lfh->filename_len, lfh_filename);
 									break;
-							
-							zip_eocd_t *eocd = (zip_eocd_t *) &buf[eocd_offset];
-							zip_cd_file_t *cdir = (zip_cd_file_t *) &buf[eocd->cdir_start];
-							
-							for (size_t i = 0; i < eocd->num_cdir_recs; i++) {
-								zip_cd_file_t *hdr = &cdir[i];
-
-								char *filename = (char *) &hdr[1];
-								char *extra = filename + hdr->filename_len;
-								char *comment = extra + hdr->extra_field_len;
-	
-								printf("files[%zu]:\n", i);
-								printf("  compressed_size: %d\n", hdr->compressed_size);
-								printf("  uncompressed_size: %d\n", hdr->uncompressed_size);
-								printf("  compression_method: %d\n", hdr->compression_method);
-								printf("  local_file_header: %d\n", hdr->local_file_header);
-								printf("  filename: '%.*s'\n", hdr->filename_len, (const char *) &hdr[1]);
-								printf("  extra: '%.*s'\n", hdr->extra_field_len, extra);
-								printf("  comment: '%.*s'\n", hdr->file_comment_len, comment);
 							}
+							free(decompressed.bytes);
 						}
 					}
 				}
 			}
 		}
-		fclose(f);
 	}
 }
 

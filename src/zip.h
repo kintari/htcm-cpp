@@ -26,4 +26,12 @@ typedef struct zip_cd_file_t {
 	uint32_t local_file_header;
 } zip_cd_file_t;
 
+typedef struct zip_lfh_t {
+	uint32_t magic; // 0x04034b50
+	uint16_t version_required_to_extract;
+	uint16_t flags, compression_method, file_last_mtime, file_last_mdate;
+	uint32_t crc, compressed_size, uncompressed_size;
+	uint16_t filename_len, extra_field_len;
+} zip_lfh_t;
+
 #pragma pack(pop)
